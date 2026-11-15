@@ -1,0 +1,23 @@
+# FastUpTV - core list
+# Ye packages har Android TV par safe hain: Google ke feedback/telemetry, ads/recommendations,
+# aur preloaded apps jo koi use nahi karta. Launcher, keyboard, settings, Play Store ko chhua nahi jata.
+
+# --- Google feedback / telemetry ---
+com.google.android.tv.bugreportsender
+com.google.android.feedback
+
+# --- ads aur recommendation rows ---
+com.google.android.tvrecommendations
+com.google.android.leanbacklauncher.recommendations
+com.google.android.backdrop
+
+# --- preloaded apps jo TV par bekaar hain ---
+com.google.android.play.games
+com.google.android.videos
+com.google.android.youtube.tvmusic
+com.google.android.syncadapters.calendar
+com.google.android.onetimeinitializer
+com.google.android.partnersetup
+com.google.android.apps.tachyon
+com.google.android.marvin.talkback
+fusion.android.tv.demo

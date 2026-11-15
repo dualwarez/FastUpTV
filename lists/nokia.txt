@@ -1,0 +1,13 @@
+# FastUpTV - Nokia / Flipkart / other budget Android TV
+#
+# Abhi ye list khaali hai: sirf core list chalegi (jo har TV par safe hai).
+# Is brand ka apna bloat add karna ho to:
+#   1. .\scripts\inspect.ps1  chalao - TV ke saare packages dikh jayenge
+#   2. Jo bekaar lage uski line yahan niche likho (ek package per line)
+#   3. TV restart karke dekho, kuch toota to line hata do (ya restore.bat chalao)
+#
+# Package yahan likhne ka matlab: 'pm disable-user' - uninstall nahi hota.
+#
+# Example:
+# com.tcl.somejunkapp
+# com.vendor.appstore

@@ -1,0 +1,30 @@
+# FastUpTV - Xiaomi / Redmi (Mi TV, Redmi TV) - PatchWall
+# Tested on: MiTV-AXSO0 (Mi TV 4A 40), Android 9, firmware PI.6036
+# PatchWall aur uske saath aane wale Xiaomi services. Home owner ko script khud chhod deta hai.
+
+# --- Xiaomi telemetry ---
+com.miui.tv.analytics
+com.xiaomi.statistic
+
+# --- PatchWall, content rows, sponsored rows ---
+com.mitv.tvhome.atv
+com.mitv.tvhome.mitvplus
+com.xm.webcontent
+com.xiaomi.floatingframe
+android.autoinstalls.config.xioami.dangal
+android.autoinstalls.config.xiaomi.amelie
+
+# --- Xiaomi background services ---
+com.xiaomi.mitv.tvmanager
+com.xiaomi.mitv.handbook
+com.xiaomo.tv.milegal
+com.xiaomi.android.tvsetup.partnercustomizer
+
+# --- preloaded apps ---
+com.xiaomi.mimusic2
+com.mitv.gallery
+
+# --- NOTE: firmware updates ---
+# Neeche wali line comment hai. Isse firmware update service band ho jata hai (PatchWall wapas
+# nahi aata, par TV ko naye firmware bhi nahi milte). Chahiye to # hata do:
+# com.xiaomi.mitv.updateservice
