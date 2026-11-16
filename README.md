@@ -22,6 +22,10 @@ home screen and tunes the system - all from one file a non-technical person can 
 
 <sub>Static copy for slow connections: [`docs/screenshot-setup.png`](docs/screenshot-setup.png)</sub>
 
+<!-- Before/after image: drop it in as docs/before-after.png and this line shows it
+![Before and after](docs/before-after.png)
+-->
+
 ---
 
 ## Quick start
@@ -80,6 +84,26 @@ Your TV will differ - the tool prints its own before/after at the end.
 Optional extras the launcher brings: rotating wallpapers you supply, and a **weather screensaver**
 that follows the real weather and time of day (sun with slow rays by day, stars and a moon at night,
 rain streaks, thunder flashes, snow, or haze - the same idea as Windows' dynamic themes).
+
+---
+
+## What exactly gets disabled
+
+Only vendor telemetry, ad/recommendation rows and preloaded apps - never anything the TV needs. A
+taste of the lists (full files in [`lists/`](lists/)):
+
+| Every Android TV (`lists/core.txt`) | Xiaomi / Redmi (`lists/xiaomi.txt`) |
+|---|---|
+| `com.google.android.tv.bugreportsender` | `com.miui.tv.analytics` |
+| `com.google.android.feedback` | `com.xiaomi.statistic` |
+| `com.google.android.tvrecommendations` | `com.mitv.tvhome.atv` (PatchWall) |
+| `com.google.android.leanbacklauncher.recommendations` | `com.xm.webcontent` (promo rows) |
+| `com.google.android.backdrop` | `com.xiaomi.floatingframe` |
+| `com.google.android.play.games` | `com.xiaomi.mimusic2` |
+| `com.google.android.videos` | `com.mitv.gallery` |
+
+Never touched, by code, on any brand: `com.android.*`, the keyboard/IME, the setup wizard, the Play
+Store, and whatever currently owns **Home**.
 
 ---
 
