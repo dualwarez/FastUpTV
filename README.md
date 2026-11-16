@@ -4,6 +4,7 @@
 [![Android TV](https://img.shields.io/badge/Android%20TV-8.0%2B-3DDC84?style=flat-square)](#supported-tvs)
 [![Licence](https://img.shields.io/badge/licence-MIT-green?style=flat-square)](LICENSE)
 [![Root](https://img.shields.io/badge/root-not%20required-brightgreen?style=flat-square)](#safety)
+[![Release](https://img.shields.io/github/v/release/dualwarez/FastUpTV?style=flat-square)](https://github.com/dualwarez/FastUpTV/releases)
 
 **Double-click one .bat. Your slow Android TV becomes fast, clean and ad-free. No root, no cable, no AI assistant.**
 
@@ -18,6 +19,8 @@ FastUpTV finds your TV on Wi-Fi, backs it up, disables the vendor bloat, install
 home screen and tunes the system - all from one file a non-technical person can run.
 
 ![demo](docs/demo.gif)
+
+<sub>Static copy for slow connections: [`docs/screenshot-setup.png`](docs/screenshot-setup.png)</sub>
 
 ---
 
