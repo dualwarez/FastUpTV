@@ -42,6 +42,13 @@ Press **Home** on the remote. That is the whole tutorial.
 
 Something wrong? `restore.bat` puts everything back.
 
+**No PC?** Run it from your phone with Termux - see [mobile/README.md](mobile/README.md).
+
+```
+pkg install android-tools
+bash mobile/setup.sh
+```
+
 ---
 
 ## The numbers (measured, not marketing)
