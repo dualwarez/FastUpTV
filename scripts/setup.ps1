@@ -82,20 +82,42 @@ if (-not $NoLauncher) { Info "launcher     : install hoga aur Home bana diya jay
 Info "performance  : animations 0.5x, cache trim$(if($Compile){', apps AOT compile'})"
 
 if ($DryRun) { Warn "DRY RUN - TV par kuch change nahi hoga" }
+
+# Preview: exactly what will be disabled, then ask. Beginners should never be surprised.
+Info "" 
+Info "ye packages disable honge (pehle 10 dikha rahe hain):"
+$preview = @($corePkgs) + @($brandPkgs)
+$preview | Select-Object -First 10 | ForEach-Object { Info "   - $_" }
+if ($preview.Count -gt 10) { Info ("   ... aur {0}" -f ($preview.Count - 10)) }
+Info ""
+Info "backup yahan jayega : backups\<date>\"
+Info "undo kabhi bhi      : restore.bat"
+Info "TV par Home         : naya launcher"
+
 if (-not $Yes -and -not $DryRun) {
     Write-Host ""
-    Write-Host "  Enter dabao shuru karne ke liye (Ctrl+C = cancel) ..." -ForegroundColor Yellow
-    Read-Host | Out-Null
+    $answer = Read-Host "  Aage badhein? (Y/n)"
+    if ($answer -match '^(n|no)$') { Write-Host "  Cancel kiya - TV par kuch change nahi hua." -ForegroundColor Yellow; exit 0 }
 }
 
 Step 4 "Backup"
 $stamp = Get-Date -Format 'yyyyMMdd-HHmmss'
 $backupDir = Join-Path $root "backups\$stamp"
+$sessionLog = Join-Path $backupDir 'session.log'
 if ($DryRun) {
     Info "would save to $backupDir"
 } else {
+    New-Item -ItemType Directory -Path $backupDir -Force | Out-Null
     Backup $serial $backupDir
     Ok "backup: $backupDir"
+    @(
+        "FastUpTV session  $(Get-Date -Format 'yyyy-MM-dd HH:mm:ss')",
+        "tv      : $serial",
+        "brand   : $brand / $manufacturer",
+        "model   : $model",
+        "android : $release (API $sdk)",
+        "old home: $homePkg"
+    ) | Out-File $sessionLog -Encoding utf8
 }
 $record = Join-Path $backupDir 'disabled.txt'
 if (-not $DryRun) { New-Item -ItemType Directory -Path $backupDir -Force | Out-Null }
@@ -104,6 +126,9 @@ Step 5 "Bloat hata rahe hain (chhote batches mein)"
 $all = @($corePkgs) + @($brandPkgs)
 $result = Apply-List $serial $all $homePkg $record -DryRun:$DryRun
 Ok ("disabled {0} | pehle se nahi tha {1} | fail {2}" -f $result.Done, $result.Skipped, $result.Failed)
+if (-not $DryRun -and $sessionLog) {
+    @("disabled: $($result.Done)", "not installed: $($result.Skipped)", "failed: $($result.Failed)") | Out-File $sessionLog -Append -Encoding utf8
+}
 
 Step 6 "Performance tuning"
 if ($DryRun) {
@@ -167,8 +192,14 @@ if ($DryRun) {
     Write-Host "  HO GAYA!" -ForegroundColor Green
     Write-Host ""
     Write-Host "  TV par Home dabao - naya launcher dikhega." -ForegroundColor Gray
-    Write-Host "  Kuch wapas chahiye?  restore.bat  chalao" -ForegroundColor Gray
-    Write-Host ("  Backup: {0}" -f $backupDir) -ForegroundColor DarkGray
+    Write-Host ""
+    Write-Host "  Wapas purana TV :  restore.bat" -ForegroundColor Gray
+    Write-Host "  Backup folder   :  $backupDir" -ForegroundColor DarkGray
+    Write-Host "  Session log     :  $sessionLog" -ForegroundColor DarkGray
+    Write-Host ""
+    Write-Host "  Kaam khatam? TV par debugging band karo (security):" -ForegroundColor Yellow
+    Write-Host "    Settings > Device Preferences > About > Build (7 tap) > Developer options" -ForegroundColor Gray
+    Write-Host "    USB debugging OFF  +  Revoke USB debugging authorizations" -ForegroundColor Gray
 }
 Write-Host "  ------------------------------------------------------------" -ForegroundColor DarkGray
 Write-Host ""

@@ -1,57 +1,60 @@
 # FastUpTV from your phone (Termux)
 
-No laptop? You can run FastUpTV **from the phone itself**, on the same Wi-Fi as the TV.
+No laptop, no cable. The phone talks ADB to the TV over the same Wi-Fi.
 
-## 1. Install Termux
+## One command
 
-Get it from **F-Droid** (recommended) or the Play Store: <https://f-droid.org/packages/com.termux/>
-
-## 2. Install the tools
-
-Open Termux and paste (one block):
+Open Termux (install it from **F-Droid**) and paste:
 
 ```bash
-pkg update -y && pkg install -y android-tools curl git
+curl -fsSL https://raw.githubusercontent.com/dualwarez/FastUpTV/main/mobile/install.sh | bash
 ```
 
-`android-tools` gives you `adb`; `git` is how you get this repo.
-
-## 3. Get FastUpTV
+Or, if you already have the repo:
 
 ```bash
-git clone https://github.com/dualwarez/FastUpTV.git
-cd FastUpTV
+bash mobile/install.sh
 ```
 
-## 4. On the TV (once)
+That installs `android-tools` + `git`, clones the repo to `~/FastUpTV`, and creates two shortcuts.
 
-Settings -> About -> press **OK 7 times** on *Build* -> Developer options -> **USB debugging** ON.
-Keep the TV on, on the same Wi-Fi as the phone.
+## One tap after that
 
-## 5. Run it
+1. Install **Termux:Widget** (F-Droid)
+2. Long-press your home screen -> Widgets -> Termux:Widget -> **FastUpTV-clean**
 
-```bash
-bash mobile/setup.sh
-```
+Now cleaning a TV is one tap. There is a **FastUpTV-restore** shortcut too.
 
-The script scans your Wi-Fi for the TV, backs it up to `~/fastuptv-backup-<date>/`, disables the
-vendor bloat, tunes the system and (if `apk/launcher.apk` is there) installs the new home screen.
+## First run
 
-## 6. Undo
+1. TV: Settings -> About -> press **OK 7 times** on *Build* -> Developer options -> **USB debugging** ON
+2. Phone and TV on the same Wi-Fi
+3. Tap the shortcut
+
+The TV shows **"Allow USB debugging?"** - tick *Always allow* and press OK. The script then finds the
+TV, backs it up to `~/fastuptv-backup-<date>/`, disables the bloat, tunes it and installs the home
+screen.
+
+## Undo
 
 ```bash
 bash mobile/restore.sh
 ```
+(or the restore shortcut)
+
+## What this is not
+
+This is the same script as the Windows version, run in a terminal. It is not a native app: there is
+no graphical plan screen, no per-app checkboxes, no watchdog. If you want that, the Windows tool plus
+the `-DryRun` flag gives you the plan; on the phone you get the same logic with less UI.
 
 ## Notes
 
-- First connection: the TV may show **"Allow USB debugging?"** - tick *Always allow* and press OK.
-- Termux has no root; the script only uses `adb`, exactly like the Windows version. Nothing is
-  uninstalled or flashed.
+- Termux has no root; only `adb` is used. Nothing is uninstalled or flashed.
 - If the scan finds nothing, connect by hand and run again:
   ```bash
   adb connect 192.168.1.50:5555
   bash mobile/setup.sh
   ```
-- The launcher APK must be inside the repo (`apk/launcher.apk`); it is, if you cloned the whole repo.
-- This path is newer than the Windows one - if something looks off, open an issue with your TV model.
+- The launcher APK must be in the repo (`apk/launcher.apk`) - it is, if you cloned the whole repo.
+- Android 9 or newer on the phone (that is where Termux's `android-tools` package works well).
