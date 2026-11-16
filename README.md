@@ -18,13 +18,11 @@
 FastUpTV finds your TV on Wi-Fi, backs it up, disables the vendor bloat, installs a featherweight
 home screen and tunes the system - all from one file a non-technical person can run.
 
+![Before and after](docs/before-after.png)
+
 ![demo](docs/demo.gif)
 
-<sub>Static copy for slow connections: [`docs/screenshot-setup.png`](docs/screenshot-setup.png)</sub>
-
-<!-- Before/after image: drop it in as docs/before-after.png and this line shows it
-![Before and after](docs/before-after.png)
--->
+<!-- Static copy for slow connections: [`docs/screenshot-setup.png`](docs/screenshot-setup.png) -->
 
 ---
 
