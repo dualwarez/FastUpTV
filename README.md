@@ -18,7 +18,7 @@
 FastUpTV finds your TV on Wi-Fi, backs it up, disables the vendor bloat, installs a featherweight
 home screen and tunes the system - all from one file a non-technical person can run.
 
-![Before and after](docs/before-after.png)
+![FastUpTV](docs/hero.png)
 
 ![demo](docs/demo.gif)
 
@@ -54,6 +54,8 @@ bash mobile/setup.sh
 ---
 
 ## The numbers (measured, not marketing)
+
+![Before and after](docs/before-after.png)
 
 On a Xiaomi Mi TV 4A 40" (Android 9, 1 GB RAM), before and after:
 
