@@ -270,12 +270,30 @@ $('restore').onclick = async () => {
 // ---------------------------------------------------------------- server
 
 function send(res, code, body, type = 'application/json') {
-  res.writeHead(code, { 'content-type': type, 'cache-control': 'no-store' });
+  res.writeHead(code, {
+    'content-type': type,
+    'cache-control': 'no-store',
+    // A page hosted elsewhere (Lovable, GitHub Pages, a phone browser) can call this server:
+    // Private Network Access needs the preflight answered with this header.
+    'access-control-allow-origin': '*',
+    'access-control-allow-methods': 'GET, POST, OPTIONS',
+    'access-control-allow-headers': 'content-type',
+    'access-control-allow-private-network': 'true',
+  });
   res.end(body);
 }
 
 const server = http.createServer(async (req, res) => {
   const url = new URL(req.url, 'http://localhost');
+
+  // preflight for pages hosted on another origin
+  if (req.method === 'OPTIONS') return send(res, 204, '');
+
+  // a tiny discovery endpoint so a website can tell "the local agent is running"
+  if (url.pathname === '/api/ping') {
+    return send(res, 200, JSON.stringify({ app: 'FastUpTV', version: 1 }));
+  }
+
   if (url.pathname === '/' || url.pathname === '/index.html') {
     if (url.searchParams.get('t') !== TOKEN) return send(res, 401, 'bad token', 'text/plain');
     return send(res, 200, PAGE, 'text/html; charset=utf-8');
