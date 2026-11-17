@@ -33,6 +33,15 @@ function Sh([string]$serial, [string]$cmd) {
 }
 
 function Get-LocalSubnet {
+    # Prefer the adapter that actually carries the default route (VPN/virtual adapters lie otherwise).
+    $route = Get-NetRoute -DestinationPrefix '0.0.0.0/0' -ErrorAction SilentlyContinue |
+        Sort-Object RouteMetric | Select-Object -First 1
+    if ($route) {
+        $addr = Get-NetIPAddress -AddressFamily IPv4 -InterfaceIndex $route.InterfaceIndex -ErrorAction SilentlyContinue |
+            Where-Object { $_.IPAddress -notlike '127.*' -and $_.IPAddress -notlike '169.254.*' } |
+            Select-Object -First 1
+        if ($addr) { return ($addr.IPAddress -replace '\.\d+$', '') }
+    }
     $ip = (Get-NetIPAddress -AddressFamily IPv4 -ErrorAction SilentlyContinue |
         Where-Object { $_.IPAddress -notlike '127.*' -and $_.IPAddress -notlike '169.254.*' } |
         Select-Object -First 1).IPAddress
